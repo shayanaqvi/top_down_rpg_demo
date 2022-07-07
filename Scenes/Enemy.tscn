@@ -1,0 +1,234 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Assets/1-bit 8x8 roguelike asset pack.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Enemy.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Sounds/Explosion 100 (6).wav" type="AudioStream" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 3, 3 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Idle"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("YSort/EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("YSort/EnemySprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("YSort/ColorRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("YSort/EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("YSort/EnemySprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.498039 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("YSort/ColorRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Walk"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("YSort/EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("YSort/ColorRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("YSort/EnemySprite:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 22.2036
+
+[sub_resource type="Animation" id=10]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Transition"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/ColorRect:modulate")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Enemy" type="KinematicBody2D"]
+collision_layer = 4
+script = ExtResource( 2 )
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="EnemySprite" type="Sprite" parent="YSort"]
+modulate = Color( 1, 1, 1, 0.498039 )
+texture = ExtResource( 1 )
+hframes = 6
+frame = 1
+region_enabled = true
+region_rect = Rect2( 8, 40, 48, 8 )
+
+[node name="ColorRect" type="ColorRect" parent="YSort"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -2.0
+margin_top = -2.0
+margin_right = 2.0
+margin_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Idle = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+anims/Walk = SubResource( 5 )
+
+[node name="PlayHitSound" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayHitSound"]
+shape = SubResource( 9 )
+
+[node name="AIMovement" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AIMovement"]
+shape = SubResource( 7 )
+
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
+scale = Vector2( 1.3, 1.3 )
+process_parent = true
+physics_process_parent = true
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -5.0
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 10 )
+anims/Transition = SubResource( 11 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+margin_right = 255.0
+margin_bottom = 144.0
+
+[connection signal="area_entered" from="PlayHitSound" to="." method="_on_AIMovement3_area_entered"]
+[connection signal="body_entered" from="PlayHitSound" to="." method="_on_AIMovement3_body_entered"]
+[connection signal="body_exited" from="PlayHitSound" to="." method="_on_AIMovement3_body_exited"]
+[connection signal="area_entered" from="AIMovement" to="." method="_on_AIMovement_area_entered"]
+[connection signal="body_entered" from="AIMovement" to="." method="_on_AIMovement_body_entered"]
+[connection signal="body_exited" from="AIMovement" to="." method="_on_AIMovement_body_exited"]

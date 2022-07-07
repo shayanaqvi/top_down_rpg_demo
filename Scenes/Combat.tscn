@@ -1,0 +1,903 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://Assets/1-bit 8x8 roguelike asset pack.png" type="Texture" id=1]
+[ext_resource path="res://Resources/DefaultTheme.tres" type="Theme" id=2]
+[ext_resource path="res://Resources/Button.tres" type="StyleBox" id=3]
+[ext_resource path="res://Resources/DefaultFont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Resources/ButtonPressed.tres" type="StyleBox" id=5]
+[ext_resource path="res://Scripts/Combat.gd" type="Script" id=6]
+[ext_resource path="res://Animations/PlayerAttack.tres" type="Animation" id=7]
+[ext_resource path="res://Animations/ScenesPlayerDamage.tres" type="Animation" id=8]
+[ext_resource path="res://Assets/Sounds/Hit_hurt 200 (30).wav" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Sounds/Powerup 5.wav" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Sounds/Laser_shoot 76.wav" type="AudioStream" id=11]
+
+[sub_resource type="Animation" id=5]
+resource_name = "PlayerDeath"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 4, 5 ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "PlayerHeal"
+length = 0.9
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("Heal:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.625 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 72, 96 ), Vector2( 55, 96 ), Vector2( 55, 96 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Heal:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.15, 0.625, 0.85 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 2.5, 2.5 ), Vector2( 2.5, 2.5 ), Vector2( 2, 2 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Heal:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.15, 0.625 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -45.0, -45.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PlayerSprite:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.625, 0.875 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 55, 95 ), Vector2( 55, 115 ), Vector2( 55, 115 ), Vector2( 55, 95 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("HealEffect:position")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.15, 0.2, 0.5125 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 55, 70 ), Vector2( 55, 76 ), Vector2( 55, 70 ), Vector2( 55, 70 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("HealEffect:modulate")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.2125, 0.875 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Heal:modulate")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.025, 0.625, 0.85 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("HealEffect:frame")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.2125, 0.2875, 0.3625, 0.4375, 0.875 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 0 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("HealSound:playing")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0.075 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "PlayerIdle"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "PlayerMagicAttack"
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.5, 0.8, 1 ),
+"transitions": PoolRealArray( 0.31864, 0.31864, 1, 1, 0.31864 ),
+"update": 0,
+"values": [ Vector2( 55, 95 ), Vector2( 55, 95 ), Vector2( 118, 82 ), Vector2( 118, 82 ), Vector2( 55, 95 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Magic:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35, 0.375, 0.4, 0.5, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 72, 95 ), Vector2( 78, 81 ), Vector2( 74, 80 ), Vector2( 70, 82 ), Vector2( 75, 86 ), Vector2( 76, 88 ), Vector2( 75, 80 ), Vector2( 74, 80 ), Vector2( 75, 86 ), Vector2( 76, 88 ), Vector2( 74, 80 ), Vector2( 75, 80 ), Vector2( 138, 67 ), Vector2( 138, 67 ), Vector2( 72, 95 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Magic:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 2.5, 2.5 ), Vector2( 2, 2 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("MagicEffect:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.475, 0.5, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("MagicEffect:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.5, 0.575, 0.65, 0.725 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Magic:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.025, 0.975, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("MagicSound:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 143, 63 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PlayerSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sword:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 63, 99 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sword:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sword:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1.6, 1.6 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sword:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 16.2 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Magic:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 67, 99 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Magic:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("MagicEffect:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("MagicEffect:frame")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Magic:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Heal:rotation_degrees")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -45.0 ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Heal:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 55, 90 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Heal:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 2.5, 2.5 ) ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Heal:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("HealEffect:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("HealEffect:frame")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("HealEffect:position")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 55, 94 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "EnemyAttack"
+length = 0.8
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("EnemySprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.2, 0.425, 0.55, 0.8 ),
+"transitions": PoolRealArray( 1.75, 1.25, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 199, 33 ), Vector2( 212, 25 ), Vector2( 136, 70 ), Vector2( 136, 70 ), Vector2( 203, 30 ), Vector2( 199, 33 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AttackSound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.225 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "EnemyDamage"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("EnemySprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 199, 33 ), Vector2( 198, 37 ), Vector2( 194, 35 ), Vector2( 202, 29 ), Vector2( 198, 28 ), Vector2( 199, 33 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "EnemyDeath"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 4, 5 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "EnemyIdle"
+length = 0.4
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("EnemySprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 205, 27 ) ]
+}
+
+[node name="Combat" type="Node"]
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 4.0, 140.0 ],
+"_edit_vertical_guides_": [ 4.0, 252.0 ]
+}
+
+[node name="UserCombatInterface" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+
+[node name="BackgroundColour" type="CanvasLayer" parent="UserCombatInterface"]
+layer = -100
+
+[node name="ColorRect" type="ColorRect" parent="UserCombatInterface/BackgroundColour"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="PlayerStatsPanel" type="Panel" parent="UserCombatInterface"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 106.0
+margin_bottom = 36.0
+theme = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserCombatInterface/PlayerStatsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = -2.0
+margin_bottom = -2.0
+alignment = 1
+
+[node name="HealthVBox" type="VBoxContainer" parent="UserCombatInterface/PlayerStatsPanel/HBoxContainer"]
+margin_right = 33.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+
+[node name="HealthLabel" type="Label" parent="UserCombatInterface/PlayerStatsPanel/HBoxContainer/HealthVBox"]
+margin_right = 33.0
+margin_bottom = 15.0
+size_flags_vertical = 3
+text = "Health Points"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="HealthValue" type="Label" parent="UserCombatInterface/PlayerStatsPanel/HBoxContainer/HealthVBox"]
+margin_top = 15.0
+margin_right = 33.0
+margin_bottom = 30.0
+size_flags_vertical = 3
+text = "10"
+align = 1
+valign = 1
+
+[node name="ActionPointsVBox" type="VBoxContainer" parent="UserCombatInterface/PlayerStatsPanel/HBoxContainer"]
+margin_left = 33.0
+margin_right = 66.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+
+[node name="ActionPointsLabel" type="Label" parent="UserCombatInterface/PlayerStatsPanel/HBoxContainer/ActionPointsVBox"]
+margin_right = 33.0
+margin_bottom = 15.0
+size_flags_vertical = 3
+text = "Action Points"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="ActionPointsValue" type="Label" parent="UserCombatInterface/PlayerStatsPanel/HBoxContainer/ActionPointsVBox"]
+margin_top = 15.0
+margin_right = 33.0
+margin_bottom = 30.0
+size_flags_vertical = 3
+text = "10"
+align = 1
+valign = 1
+
+[node name="ManaPointsVBox" type="VBoxContainer" parent="UserCombatInterface/PlayerStatsPanel/HBoxContainer"]
+margin_left = 66.0
+margin_right = 100.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+
+[node name="ManaPointsLabel" type="Label" parent="UserCombatInterface/PlayerStatsPanel/HBoxContainer/ManaPointsVBox"]
+margin_right = 34.0
+margin_bottom = 15.0
+size_flags_vertical = 3
+text = "Mana Points"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="ManaPointsValue" type="Label" parent="UserCombatInterface/PlayerStatsPanel/HBoxContainer/ManaPointsVBox"]
+margin_top = 15.0
+margin_right = 34.0
+margin_bottom = 30.0
+size_flags_vertical = 3
+text = "10"
+align = 1
+valign = 1
+
+[node name="EnemyStatsPanel" type="Panel" parent="UserCombatInterface"]
+margin_left = 150.0
+margin_top = 90.0
+margin_right = 254.0
+margin_bottom = 124.0
+theme = ExtResource( 2 )
+custom_styles/panel = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserCombatInterface/EnemyStatsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = -2.0
+margin_bottom = -2.0
+alignment = 1
+
+[node name="HealthVBox" type="VBoxContainer" parent="UserCombatInterface/EnemyStatsPanel/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+
+[node name="HealthLabel" type="Label" parent="UserCombatInterface/EnemyStatsPanel/HBoxContainer/HealthVBox"]
+margin_right = 100.0
+margin_bottom = 15.0
+size_flags_vertical = 3
+text = "Enemy Health Points"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="HealthValue" type="Label" parent="UserCombatInterface/EnemyStatsPanel/HBoxContainer/HealthVBox"]
+margin_top = 15.0
+margin_right = 100.0
+margin_bottom = 30.0
+size_flags_vertical = 3
+text = "10"
+align = 1
+valign = 1
+
+[node name="Textbox" type="Panel" parent="UserCombatInterface"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_top = 126.0
+margin_right = 2.0
+margin_bottom = 2.0
+theme = ExtResource( 2 )
+custom_styles/panel = ExtResource( 3 )
+
+[node name="Text" type="Label" parent="UserCombatInterface/Textbox"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 4.0
+margin_top = -3.0
+margin_right = 63.0
+margin_bottom = 3.0
+theme = ExtResource( 2 )
+custom_fonts/font = ExtResource( 4 )
+text = "Placeholder text"
+valign = 1
+
+[node name="Sword" type="Button" parent="UserCombatInterface"]
+margin_left = 2.0
+margin_top = 38.0
+margin_right = 35.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 5 )
+text = "Sword"
+
+[node name="Magic" type="Button" parent="UserCombatInterface"]
+margin_left = 37.0
+margin_top = 38.0
+margin_right = 70.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 5 )
+text = "Magic"
+
+[node name="Heal" type="Button" parent="UserCombatInterface"]
+margin_left = 72.0
+margin_top = 38.0
+margin_right = 106.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 5 )
+text = "Heal"
+
+[node name="Defend" type="Button" parent="UserCombatInterface"]
+margin_left = 2.0
+margin_top = 57.0
+margin_right = 35.0
+margin_bottom = 74.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 5 )
+
+[node name="Button3" type="Button" parent="UserCombatInterface"]
+margin_left = 37.0
+margin_top = 57.0
+margin_right = 70.0
+margin_bottom = 74.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 5 )
+
+[node name="Button4" type="Button" parent="UserCombatInterface"]
+margin_left = 72.0
+margin_top = 57.0
+margin_right = 106.0
+margin_bottom = 74.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 5 )
+
+[node name="PlayerSprite" type="Sprite" parent="."]
+position = Vector2( 143, 63 )
+scale = Vector2( 2.25, 2.25 )
+texture = ExtResource( 1 )
+hframes = 6
+frame = 1
+region_enabled = true
+region_rect = Rect2( 8, 24, 48, 8 )
+
+[node name="EnemySprite" type="Sprite" parent="."]
+position = Vector2( 205, 27 )
+scale = Vector2( 1.75, 1.75 )
+texture = ExtResource( 1 )
+hframes = 6
+frame = 1
+region_enabled = true
+region_rect = Rect2( 8, 40, 48, 8 )
+
+[node name="Sword" type="Sprite" parent="."]
+position = Vector2( 63, 99 )
+rotation = 0.282743
+scale = Vector2( 1.6, 1.6 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 296, 96, 8, 8 )
+
+[node name="Magic" type="Sprite" parent="."]
+position = Vector2( 67, 99 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+hframes = 2
+region_enabled = true
+region_rect = Rect2( 320, 104, 16, 8 )
+
+[node name="MagicEffect" type="Sprite" parent="."]
+position = Vector2( 156, 51 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+hframes = 4
+frame = 1
+region_enabled = true
+region_rect = Rect2( 208, 24, 32, 8 )
+
+[node name="Heal" type="Sprite" parent="."]
+position = Vector2( 55, 90 )
+rotation = -0.785398
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 328, 104, 8, 8 )
+
+[node name="HealEffect" type="Sprite" parent="."]
+position = Vector2( 55, 94 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+hframes = 4
+frame = 1
+region_enabled = true
+region_rect = Rect2( 208, 32, 32, 8 )
+
+[node name="PlayerAnimations" type="AnimationPlayer" parent="."]
+autoplay = "PlayerIdle"
+anims/PlayerAttack = ExtResource( 7 )
+anims/PlayerDamage = ExtResource( 8 )
+anims/PlayerDeath = SubResource( 5 )
+anims/PlayerHeal = SubResource( 13 )
+anims/PlayerIdle = SubResource( 10 )
+anims/PlayerMagicAttack = SubResource( 12 )
+anims/RESET = SubResource( 2 )
+
+[node name="EnemyAnimations" type="AnimationPlayer" parent="."]
+autoplay = "EnemyIdle"
+anims/EnemyAttack = SubResource( 9 )
+anims/EnemyDamage = SubResource( 11 )
+anims/EnemyDeath = SubResource( 6 )
+anims/EnemyIdle = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+
+[node name="AttackSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[node name="MagicSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="HealSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+
+[connection signal="pressed" from="UserCombatInterface/Sword" to="." method="_on_Sword_pressed"]
+[connection signal="pressed" from="UserCombatInterface/Magic" to="." method="_on_Magic_pressed"]
+[connection signal="pressed" from="UserCombatInterface/Heal" to="." method="_on_Heal_pressed"]
+[connection signal="pressed" from="UserCombatInterface/Defend" to="." method="_on_Defend_pressed"]
